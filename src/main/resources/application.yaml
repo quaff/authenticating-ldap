@@ -1,0 +1,12 @@
+# embedded ldap server
+spring.ldap.embedded:
+  ldif: classpath:test-server.ldif
+  base-dn: dc=example,dc=com
+  port: 8389
+
+# ldap server
+spring.ldap:
+  url: ldap://localhost:389
+  base: dc=example,dc=com
+  username: uid=admin,ou=people
+  password: secret
