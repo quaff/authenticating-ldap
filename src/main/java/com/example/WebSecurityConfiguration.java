@@ -3,6 +3,7 @@ package com.example;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.DirContextOperations;
+import org.springframework.ldap.core.support.LdapContextSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.Customizer;
@@ -34,14 +35,12 @@ public class WebSecurityConfiguration {
     }
 
     @Autowired
-    public void configure(AuthenticationManagerBuilder auth, UserDetailsService userDetailsService) throws Exception {
+    public void configure(AuthenticationManagerBuilder auth, LdapContextSource ldapContextSource, UserDetailsService userDetailsService) throws Exception {
         auth
                 .ldapAuthentication()
                 .userDnPatterns("uid={0},ou=people")
                 .groupSearchBase("ou=groups")
-                .contextSource()
-                .url("ldap://localhost:8389/dc=example,dc=com")
-                .and()
+                .contextSource(ldapContextSource)
                 .passwordCompare()
                 .passwordEncoder(new BCryptPasswordEncoder())
                 .passwordAttribute("userPassword")
