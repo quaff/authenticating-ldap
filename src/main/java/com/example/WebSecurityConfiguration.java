@@ -36,6 +36,7 @@ public class WebSecurityConfiguration {
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth, BaseLdapPathContextSource contextSource, UserDetailsService userDetailsService) throws Exception {
+        // use auth.authenticationProvider(new ActiveDirectoryLdapAuthenticationProvider()) instead for Active Directory
         auth
                 .ldapAuthentication()
                 .userDnPatterns("uid={0},ou=people")
